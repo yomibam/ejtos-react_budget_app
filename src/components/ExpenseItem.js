@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
-import { TiDelete } from "react-icons/ti";
+import { AiFillMinusCircle } from "react-icons/ai";
+import { AiFillPlusCircle } from "react-icons/ai";
 import { AppContext } from "../context/AppContext";
 
 const ExpenseItem = (props) => {
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, currency } = useContext(AppContext);
 
   const handleDeleteExpense = () => {
     dispatch({
       type: "DELETE_EXPENSE",
-      payloas: "props.id",
+      payload: props.id,
     });
   };
 
@@ -23,15 +24,29 @@ const ExpenseItem = (props) => {
       payload: expense,
     });
   };
+
   return (
     <tr>
       <td>{props.name}</td>
-      <td>£{props.cost}</td>
       <td>
-        <button onClick={(event) => increaseAllocation(props.name)}>+</button>
+        {currency}
+        {props.cost}
       </td>
       <td>
-        <TiDelete size="1.5em" onClick={handleDeleteExpense}></TiDelete>
+        <AiFillPlusCircle
+          size="2.5rem"
+          color="green"
+          onClick={(event) => increaseAllocation(props.name)}
+        >
+          +
+        </AiFillPlusCircle>
+      </td>
+      <td>
+        <AiFillMinusCircle
+          size="2.5em"
+          color="red"
+          onClick={handleDeleteExpense}
+        ></AiFillMinusCircle>
       </td>
     </tr>
   );
